@@ -22,10 +22,10 @@ class JsonBaseRepository implements RepositoryInterface
     }
     public function update(int $id, array $data)
     {
-        $users = json_decode(file_get_contents('users.json'), true);
+       $users = json_decode(file_get_contents('users.json'), true);
         foreach ($users as &$user) {
             if ($user['id'] == $id) {
-                $user['full_name'] = $data['full_name'] ?? $user['full_name'];
+                $user['fullName'] = $data['fullName'] ?? $user['fullName'];
                 $user['email'] = $data['email'] ?? $user['email'];
                 $user['mobile'] = $data['mobile'] ?? $user['mobile'];
                 $user['password'] = $data['password'] ?? $user['password'];

@@ -34,4 +34,26 @@ class UsersController extends APIController
         ]);
 
     }
+
+    public function updateInfo(Request $request)
+    {
+        $this->validate($request,[
+            'id' => 'required|string',
+            'fullName' => 'required|string|min:3|max:255',
+            'email' => 'required|email',
+            'mobile' => 'required|string',
+        ]);
+
+        $this->userRepository->update($request->id,[
+            'fullName' => $request->fullName,
+            'email' => $request->email,
+            'mobile' => $request->mobile,
+        ]);
+
+        return $this->responseSuccess('کابر با موفقیت بروز رسانی شد', [
+            'fullName' => $request->fullName,
+            'email' => $request->email,
+            'mobile' => $request->mobile,
+        ]);
+    }
 }
