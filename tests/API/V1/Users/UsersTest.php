@@ -6,7 +6,7 @@ class UsersTest extends \Tests\TestCase
     public function test_should_create_user()
     {
         $response = $this->call('POST','api/v1/users',[
-            'fullName' => 'Amirreza Ebrahimi',
+            'fullName' => 'Amirreza Ebrahimii',
             'email' => 'aabrahimi1718@gmail.com',
             'mobile' => '09358919279',
             'password' => '123456',
@@ -23,6 +23,12 @@ class UsersTest extends \Tests\TestCase
                 'password',
             ]
         ]);
+    }
+    public function test_send_params()
+    {
+        $response = $this->call('POST','api/v1/users',[]);
+
+        $this->assertEquals(422,$response->status());
     }
 }
 
