@@ -79,5 +79,12 @@ class UsersTest extends \Tests\TestCase
             ]
         ]);
     }
+
+    public function test_send_params_update_password()
+    {
+        $response = $this->call('PUT','api/v1/users/change-password',[]);
+
+        $this->assertEquals(422,$response->status());
+    }
 }
 
