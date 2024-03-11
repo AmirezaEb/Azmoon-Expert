@@ -63,6 +63,38 @@ class JsonBaseRepository implements RepositoryInterface
     {
         // TODO: Implement find() method.
     }
+
+    public function paginate(string $search = null,int $page, int $pageSaiz = 20)
+    {
+        $users = json_decode(file_get_contents(base_path() . '/users.json'),true);
+
+        if(!is_null($search))
+        {
+            foreach($users as $key => $user){
+                if(\array_search($search, $user))
+                {
+                    return $users[$key];
+                }
+            }
+        }
+        $totalRecords = count($users);
+        $totalPages = ceil($totalRecords / $pageSaiz);
+
+        if($page > $totalPages)
+        {
+            $page = $totalPages;
+        }
+
+        if($page < 1)
+        {
+            $page = 1;
+        }
+
+        $offSet = ($page - 1) * $pageSaiz;
+
+        return array_slice($users, $offSet, $pageSaiz);
+    }
+
 }
 
 ?>

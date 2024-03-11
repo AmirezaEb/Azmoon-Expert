@@ -90,9 +90,51 @@ class UsersTest extends \Tests\TestCase
     public function test_delete_user()
     {
         $response = $this->call('DELETE','api/v1/users',[
-            'id' => '10',
+            'id' => '20',
         ]);
 
+        $this->assertEquals(200,$response->status());
+        $this->seeJsonStructure([
+            'success',
+            'message',
+            'data',
+        ]);
+    }
+
+    public function test_read_user()
+    {
+        $pageSize = 5;
+
+        $response = $this->call('GET','api/v1/users',[
+            'page' => 1,
+            'pagesize' => $pageSize,
+        ]);
+
+        $data = json_decode($response->getContent(),true);
+
+        $this->assertEquals($pageSize,count($data['data']));
+        $this->assertEquals(200,$response->status());
+        $this->seeJsonStructure([
+            'success',
+            'message',
+            'data',
+        ]);
+    }
+
+    public function test_read_search_user()
+    {
+        $pageSize = 5;
+        $userEmail = 'aabrahimi1718@gmail.com';
+
+        $response = $this->call('GET','api/v1/users',[
+            'search' => $userEmail,
+            'page' => 1,
+            'pagesize' => $pageSize,
+        ]);
+
+        $data = json_decode($response->getContent(),true);
+
+        $this->assertEquals($data['data']['email'],$userEmail);
         $this->assertEquals(200,$response->status());
         $this->seeJsonStructure([
             'success',
