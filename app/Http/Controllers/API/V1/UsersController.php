@@ -11,6 +11,7 @@ class UsersController extends APIController
     public function __construct(private UserRepositoryInterface $userRepository)
     {
     }
+
     public function store(Request $request)
     {
         $this->validate($request,[
@@ -75,4 +76,20 @@ class UsersController extends APIController
             'mobile' => $request->mobile,
         ]);
     }
+
+    public function delete(Request $request)
+    {
+        $this->validate($request,[
+            'id' => 'required',
+        ]);
+
+        $this->userRepository->delete([
+            'id' => $request->id,
+        ]);
+
+        return $this->responseSuccess('کاربر با موفقیت حذف شد',[]);
+    }
+
+
 }
+

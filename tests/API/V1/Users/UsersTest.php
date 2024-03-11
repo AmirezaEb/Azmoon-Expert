@@ -35,7 +35,7 @@ class UsersTest extends \Tests\TestCase
     public function test_update_info_user()
     {
         $response = $this->call('PUT','api/v1/users',[
-            'id' => '1',
+            'id' => '2',
             'fullName' => 'Mahdi Hoshyar',
             'email' => 'mahdi@gmail.com',
             'mobile' => '09362973637',
@@ -85,6 +85,20 @@ class UsersTest extends \Tests\TestCase
         $response = $this->call('PUT','api/v1/users/change-password',[]);
 
         $this->assertEquals(422,$response->status());
+    }
+
+    public function test_delete_user()
+    {
+        $response = $this->call('DELETE','api/v1/users',[
+            'id' => '10',
+        ]);
+
+        $this->assertEquals(200,$response->status());
+        $this->seeJsonStructure([
+            'success',
+            'message',
+            'data',
+        ]);
     }
 }
 
